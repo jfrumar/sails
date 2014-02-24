@@ -123,12 +123,16 @@ function (io) {
       return cb('Invalid or missing URL!\n' + usage);
     }
 
-    // Build to request
+    // Extract headers
+    var headers = data.headers || {};
+    delete data.headers;
+
+    // Build the request
     var json = io.JSON.stringify({
       url: url,
-      data: data
+      data: data,
+      headers: headers
     });
-
 
     // Send the message over the socket
     socket.emit(method, json, function afterEmitted (result) {
